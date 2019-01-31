@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./utils/getWeb3";
 import IPFS from 'ipfs-api'
+import PublicationList from './components/publicationList.jsx'
 import "./App.css";
 
 const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
@@ -67,16 +68,9 @@ class App extends Component {
           console.log(data);
       });
 
-      // get all cid
-      instance.getPastEvents('AddedCID', { fromBlock: 0, toBlock: 'latest'})
-      .then((events) => {
-        console.log(events) // same results as the optional callback above
-      });
-
-
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -111,23 +105,15 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
-
+        <h2>Upload Publication</h2>
         <form onSubmit={this.onSubmit}>
           <input type="file" onChange={this.captureFile} />
           <button type="submit">Send</button>
         </form>
         <div>{this.state.ipfsHash}</div>
+
+        <h2>Publications</h2>
+        <PublicationList contract={this.state.contract}/>
       </div>
     );
   }
