@@ -16,33 +16,7 @@ class App extends Component {
     web3: null,
     accounts: null,
     contract: null,
-    fileBuffer: null,
-    ipfsHash: null
   };
-
-  captureFile = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
-    const file = event.target.files[0]
-    let reader = new window.FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.onloadend = () => this.convertToBuffer(reader)
-  }
-  convertToBuffer = async (reader) => {
-    const buffer = await Buffer.from(reader.result)
-    this.setState({ buffer })
-  }
-
-  onSubmit = async (event) => {
-    event.preventDefault()
-
-    await ipfs.add(this.state.buffer, (err, ipfsHash) => {
-      console.log(err, ipfsHash)
-      const cid = ipfsHash[0].hash
-      this.logCID(cid)
-      this.setState({ ipfsHash: cid })
-    })
-  }
 
   componentDidMount = async () => {
     try {
@@ -81,25 +55,6 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
-
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
-
-    // Update state with the result.
-    this.setState({ storageValue: response });
-  };
-
-  logCID = async (cid) => {
-    const { accounts, contract } = this.state
-
-    await contract.methods.addCID(cid).send({ from: accounts[0], gas: 50000 })
-  }
-
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -107,13 +62,7 @@ class App extends Component {
     return (
       <div className="App">
         <h2>Upload Publication</h2>
-        <IPFSUploader/>
-        <form onSubmit={this.onSubmit}>
-          <input type="file" onChange={this.captureFile} />
-          <button type="submit">Send</button>
-        </form>
-        <div>{this.state.ipfsHash}</div>
-
+        <IPFSUploader accounts={this.state.accounts} contract={this.state.contract} />
 
         <h2>Publications</h2>
         <PublicationList contract={this.state.contract}/>
