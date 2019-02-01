@@ -890,12 +890,12 @@
     "4447": {
       "events": {},
       "links": {},
-      "address": "0x711410052Bc8a00d88D379157c14caA3b5796ab8",
-      "transactionHash": "0x8da56079e177d5b126b0d722cca68c4665d43b1eb180f93c5697076d881c84d8"
+      "address": "0x58f8fE36fc3Dc7d3E43f1E91f4d81c312Ef3336C",
+      "transactionHash": "0xe2bf130cfb15763819a12fb93f070daa5b77f5f344433d61c6d66691681b7da8"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-31T18:36:49.996Z",
+  "updatedAt": "2019-02-01T17:11:18.664Z",
   "devdoc": {
     "methods": {}
   },

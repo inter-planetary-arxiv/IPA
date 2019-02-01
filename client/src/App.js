@@ -3,6 +3,7 @@ import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./utils/getWeb3";
 import IPFS from 'ipfs-api'
 import PublicationList from './components/publicationList.jsx'
+import IPFSUploader from './components/IPFSUploader.jsx'
 import "./App.css";
 
 const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
@@ -106,11 +107,13 @@ class App extends Component {
     return (
       <div className="App">
         <h2>Upload Publication</h2>
+        <IPFSUploader/>
         <form onSubmit={this.onSubmit}>
           <input type="file" onChange={this.captureFile} />
           <button type="submit">Send</button>
         </form>
         <div>{this.state.ipfsHash}</div>
+
 
         <h2>Publications</h2>
         <PublicationList contract={this.state.contract}/>

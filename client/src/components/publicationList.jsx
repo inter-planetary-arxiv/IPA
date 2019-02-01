@@ -23,7 +23,11 @@ class PublicationList extends Component {
           {this.state.publications.map(
             publication =>
               <li>
-                <a href={`https://ipfs.io/ipfs/${publication}`} target="_blank">
+                <a
+                  href={`https://ipfs.io/ipfs/${publication}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {publication}
                 </a>
               </li>
