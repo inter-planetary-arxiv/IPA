@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+ import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./utils/getWeb3";
-import IPFS from 'ipfs-api'
 import PublicationList from './components/publicationList.jsx'
 import IPFSUploader from './components/IPFSUploader.jsx'
+import Navbar from './components/Navbar.jsx'
 import "./App.css";
 
-const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+
 // test https://ipfs.io/ipfs/QmPtmqeEnCNGZfFKfq254H5DBDviGStU1XvyoGsy2DmZvV
 
 
@@ -59,13 +59,17 @@ class App extends Component {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
+
     return (
-      <div className="App">
-        <h2>Upload Publication</h2>
+      <div>
+        <Navbar />
+        <h2 id="publications">Publications</h2>
+        <PublicationList contract={this.state.contract}/>
+
+        <h2 id="upload">Upload</h2>
         <IPFSUploader accounts={this.state.accounts} contract={this.state.contract} />
 
-        <h2>Publications</h2>
-        <PublicationList contract={this.state.contract}/>
+        <h2 id="about">About</h2>
       </div>
     );
   }

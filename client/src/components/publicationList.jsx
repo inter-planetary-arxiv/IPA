@@ -21,8 +21,8 @@ class PublicationList extends Component {
       <Fragment>
         <ul>
           {this.state.publications.map(
-            publication =>
-              <li>
+            (publication, index) =>
+              <li key={index}>
                 <a
                   href={`https://ipfs.io/ipfs/${publication}`}
                   target="_blank"

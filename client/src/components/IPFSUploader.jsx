@@ -14,12 +14,13 @@ class IPFSUploader extends Component {
       const buffer = await Buffer.from(reader.result)
 
       // Upload file to IPFS
-      const cid = await ipfs.add(buffer, async (err, ipfsHash) => {
+      await ipfs.add(buffer, async (err, ipfsHash) => {
         if(err)
           console.err('ipfs error': err)
         const cid = ipfsHash[0].hash
 
         // Register CID in Ethereum
+        console.log(this.props.accounts[0], cid)
         await this.props.contract.methods.addCID(cid).send({
           from: this.props.accounts[0], gas: 50000
         })
